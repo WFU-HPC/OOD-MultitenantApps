@@ -4,6 +4,8 @@
 **The HPC Team** (https://hpc.wfu.edu)<br>
 **Principal contact: Sean Anderson** (anderss@wfu.edu)
 
+[Tips and Tricks Presentation from Oct. 2, 2025](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/presentation.pdf)
+
 The Multitenant Apps framework was developed for supporting LLMs, databases, and other services on traditional, job-based HPC infrastructure through Open OnDemand (OOD). It allows for controlled and secure sharing of these services between select users, and can greatly reduce hardware overhead since users share the same resources. It is also an effective method for delivering content to users within the OOD interface, which is especially useful within classrooms, research groups, and even departments.
 
 
@@ -139,3 +141,13 @@ sacctmgr mod user <newuser> set defaultwckey=""
 ```
 
 You can add these commands to your onboarding process.
+
+## Enabling the Multitenant behavior
+
+Once you have everything in place and are satisfied with your Slurm configuration, you will need to enable the Multitenant framework by chaning the environment variable in the `/etc/ood/config/apps/dashboard/env` file:
+
+```sh
+MULTITENANT_ENABLE=true
+```
+
+You will need to restart your PUN in order for this change to take effect.
