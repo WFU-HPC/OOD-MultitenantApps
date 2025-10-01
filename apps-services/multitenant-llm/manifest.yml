@@ -1,0 +1,9 @@
+---
+name: Multitenant LLM
+category: Interactive Apps
+subcategory: "Multitenant"
+role: batch_connect
+description: |
+  This app will launch the Multitenant Ollama Server.
+tile:
+  border_color: "teal"

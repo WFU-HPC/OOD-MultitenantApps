@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# print out every command
+# set -x
+
+# Benchmark info
+echo "TIMING - Starting main script at: $(date)"
+
+################################################################################
+# Environment Modules
+################################################################################
+
+# make sure module command is available
+. /usr/share/Modules/init/bash
+
+# Purge the module environment to avoid conflicts
+module purge
+
+# load pre-defined versions from the list
+module load <%= context.version %>
+
+################################################################################
+################################################################################
+#
+# Start program
+#
+
+# Benchmark info
+echo "TIMING - Starting user program at: $(date)"
+
+# launch Ollama
+ollama serve

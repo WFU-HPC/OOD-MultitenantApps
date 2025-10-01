@@ -1,0 +1,14 @@
+<strong>Ollama API URL:</strong><pre><code><%= ollama_url.to_s.gsub(":",'&#x3A;') %></code></pre>
+
+<div style="display: flex; gap: 20px;" class="d-flex">
+<form action="/pun/sys/dashboard/batch_connect/sys/code-server" method="get" target="_self">
+  <button class="btn btn-primary" type="submit" style="width:200px">
+    <i class="fa fa-cogs"></i> Launch Code Server
+  </button>
+</form>
+<form action="/pun/sys/dashboard/batch_connect/sys/multitenant-jupyter" method="get" target="_self">
+  <button class="btn btn-primary" type="submit" style="width:200px">
+    <i class="fa fa-eye"></i> Launch Jupyter
+  </button>
+</form>
+</div>

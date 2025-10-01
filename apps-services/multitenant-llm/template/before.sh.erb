@@ -1,0 +1,40 @@
+# Export the module function if it exists
+[[ $(type -t module) == "function" ]] && export -f module
+
+# Find available port to run server on
+export port=$(find_port ${host} 32768 65535)
+
+# # Generate password
+# export password="$(create_passwd 16)"
+
+# Get the session id into a variable
+export sessionid=<%= session.id %>
+
+################################################################################
+################################################################################
+
+<%- if context.ollama_models == "system" -%>
+export OLLAMA_MODELS="/deac/data/ollama"
+<%- elsif context.ollama_models == "scratch" -%>
+export OLLAMA_MODELS="/scratch/${SLURM_JOB_ID}"
+<%- elsif context.ollama_models == "custom" -%>
+export OLLAMA_MODELS=<%= context.ollama_custom %>
+mkdir -p $OLLAMA_MODELS
+<%- end -%>
+
+<%- if context.ollama_model -%>
+export ollama_model=<%= context.ollama_model %>
+<%- end -%>
+
+export ollama_url="http://${host}:${port}"
+export ollama_models=$OLLAMA_MODELS
+
+# Set Ollama environment variables
+export OLLAMA_HOST=$ollama_url
+export OLLAMA_ORIGINS="*"
+export OLLAMA_NOHISTORY=1
+export OLLAMA_SCHED_SPREAD=1
+export OLLAMA_MAX_LOADED_MODELS=1
+export OLLAMA_TMPDIR=/scratch/${SLURM_JOBID}
+export FORWARDED_ALLOW_IPS="127.0.0.1"
+

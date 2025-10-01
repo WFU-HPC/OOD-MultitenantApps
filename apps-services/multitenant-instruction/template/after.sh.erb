@@ -1,0 +1,132 @@
+<% unless context.enable_multitenant == 'none' %>
+################################################################################
+## start multitenant
+################################################################################
+
+# This section contains some helper functions, primarily for converting strings
+# mangling user information, and doing some simply encryption tasks. You should
+# rarely need to modify these functions, but feel free to add your own!
+
+function mt_guids () {
+  # returns a comma-separated string of uids from a given posix group
+  if [[ -n $1 ]]; then local mygroup="$1"; else local mygroup="$(id -gn)"; fi
+  local myusers=($(getent group $mygroup | cut -d: -f4 | tr ',' ' '))
+  echo $(id -u ${myusers[@]} | sort -h) | tr ' ' ','
+}
+
+function mt_ghex () {
+  # converts a string to hex and then zero-pads it to a specified length
+  local plain="$1"
+  local length="$2"
+  local hex=$(echo -n "$plain" | xxd -p)
+  echo -n $hex | awk '{printf $0;while(len-->0){printf char}}' len=$(($length-${#hex})) char=0
+}
+
+function mt_gname () {
+  # concatenates the different parts of the name and removes all whitespace
+  local prefix="$1"
+  local message="$2"
+  echo -n "$prefix | $message" | tr -d '[:space:]'
+}
+
+function mt_genc () {
+  # compresses a string with gzip and then encrypts with a specified key and iv
+  local name="$1"
+  local mykey="$2"
+  local myiv="$3"
+  echo -n $name | gzip | openssl enc -aes-256-cbc -e -a -A -K $mykey -iv $myiv
+}
+
+############################################################################
+############################################################################
+
+# This section is where you put the information you want to transmit. You will
+# usually want this list to be similar or identical to your 'connection.yml'
+# file, which automatically includes 'host', 'password', and 'port'.
+# The rest of the parameters should match whatever is in the 'conn_params'
+# section above.
+
+mt_connection=$(cat <<EOF
+{
+  'content_path': '${content_path}'
+}
+EOF
+)
+
+############################################################################
+############################################################################
+
+# This section is for user selection, accounting, and the card delivery.
+# They are expected in the initializer, so if you add or remove a value,
+# you need to update the initializer accordingly. Only modify them if you
+# know what you are doing!
+# Description as follows:
+# mtu (users): list of UIDs for users that are allowed to show mt app
+# mti (id): the OOD session UUID that is generated
+# mta (appname): a string that describes the app being shared
+# mtm (method): the way the shared content is delivered; form (always) or card
+# mtd (delivery): name of delivery app that will display the content to users
+
+mt_accounting=$(cat << EOF
+{
+  'mtu':  '$(mt_guids "<%= context.auto_groups %>")',
+  'mti':  '${sessionid}',
+  'mta':  '<%= context.mt_appname %>',
+  'mtm':  '<%= context.mt_method %>',
+  'mtd':  '<%= context.mt_delivery %>'
+}
+EOF
+)
+
+############################################################################
+############################################################################
+
+# This section is where you select the encryption key and initialization
+# vector that will be used to encrypt the string. If you change these, you
+# will also need to update the values in the initializer! In general, these
+# values should only be changed by the OOD administrator.
+
+mt_key="${SLURM_JOB_ID}${USER}"
+mt_iv="${SLURM_JOB_ID}${SLURM_JOB_ID}"
+
+############################################################################
+############################################################################
+
+# This section puts everything together, generates the necessary encryption
+# parameters, and then changes the name of the job to send the encrypted
+# content that will be parsed by the initializer.
+
+# generate the message from the prefix and job specs
+mt_message=$(mt_gname "$mt_accounting" "$mt_connection")
+
+# establish your encryption key and initialization vector (iv)
+cypher_key=$(mt_ghex $mt_key 64) # key should be 64 characters
+cypher_iv=$(mt_ghex $mt_iv 32)   # iv  should be 32 characters
+
+# get the old jobname
+# name_old=$(squeue --noheader --format=%1024j -j ${SLURM_JOB_ID} | tr -d '[:space:]')
+name_old="sys/dashboard"
+
+# posix group name of permitted users
+name_group="<%= context.auto_groups %>"
+
+# now we can encryt the message and it is ready to pass to slurm
+name_message=$(mt_genc "$mt_message" "$cypher_key" "$cypher_iv")
+
+# finally, append your awesome string to old name and save
+name_final="${name_old}|${name_group}|${name_message}"
+
+# if the final string has more than 1024 characters, then that exceed the slurm
+# name field. The mt job should not proceed.
+if [[ ${#name_final} -le 1024 ]]; then
+  echo "New string is ${#name_final} characters long, which is OK. Changing name!"
+  scontrol update JobId=${SLURM_JOB_ID} jobname="${name_final}"
+else
+  echo "New string is ${#name_final} characters long, which exceeds the limit of 1024 characters. Terminating job!"
+  scancel ${SLURM_JOB_ID}
+fi
+
+################################################################################
+## end multitenant
+################################################################################
+<% end %>

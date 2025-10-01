@@ -1,0 +1,9 @@
+---
+name: Multitenant Dashboard
+category: Interactive Apps
+subcategory: "Multitenant"
+role: batch_connect
+description: |
+  This app will launch the Multitenant Dashboard Server.
+tile:
+  border_color: "teal"

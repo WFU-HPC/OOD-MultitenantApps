@@ -1,0 +1,90 @@
+<%- if mt_appname == "DB_Conn" -%>
+
+<h5>Database Connection Details</h5>
+<strong>Host:</strong>     <code><%= host %></code><br>
+<strong>Port:</strong>     <code><%= port %></code><br>
+<strong>Database:</strong> <code><%= database %></code><br>
+<strong>Username:</strong> <code><%= user %></code><br>
+<strong>Password:</strong> <code><%= password %></code><br>
+
+<div style="display: flex; gap: 20px;" class="d-flex">
+<form action="/pun/sys/dashboard/batch_connect/sys/cloudbeaver" method="get" target="_self">
+  <button class="btn btn-primary" type="submit" style="width:200px">
+    <i class="fa fa-database"></i> Launch CloudBeaver
+  </button>
+</form>
+<form action="/pun/sys/dashboard/batch_connect/sys/dbeaver" method="get" target="_self">
+  <button class="btn btn-primary" type="submit" style="width:200px">
+    <i class="fa fa-database"></i> Launch DBeaver
+  </button>
+</form>
+</div>
+
+<%- elsif mt_appname == "DB_JDBC" -%>
+
+<strong>JDBC URL:</strong> <pre><code><%= jdbc_url %></code></pre>
+<strong>Username:</strong> <code><%= user %></code><br>
+<strong>Password:</strong> <code><%= password %></code><br>
+
+<div style="display: flex; gap: 20px;" class="d-flex">
+<form action="/pun/sys/dashboard/batch_connect/sys/cloudbeaver" method="get" target="_self">
+  <button class="btn btn-primary" type="submit" style="width:200px">
+    <i class="fa fa-database"></i> Launch CloudBeaver
+  </button>
+</form>
+<form action="/pun/sys/dashboard/batch_connect/sys/dbeaver" method="get" target="_self">
+  <button class="btn btn-primary" type="submit" style="width:200px">
+    <i class="fa fa-database"></i> Launch DBeaver
+  </button>
+</form>
+</div>
+
+<%- elsif mt_appname == "Ollama_API" -%>
+
+<strong>Ollama API URL:</strong><pre><code><%= ollama_url.to_s.gsub(":",'&#x3A;') %></code></pre>
+
+The Ollama API URL shown above has been automatically set in the <code>$OLLAMA_HOST</code> environment variable.
+
+<strong>For Jupyter notebooks:</strong> Select the Ollama API from the list in the form. Once in the Notebook, list the models available like this:
+<pre><code class="python">import ollama
+for m in ollama.list().models:
+  print(m.model)</code></pre>
+
+<div style="display: flex; gap: 20px;" class="d-flex">
+<form action="/pun/sys/dashboard/batch_connect/sys/multitenant-jupyter" method="get" target="_self">
+  <button class="btn btn-primary" type="submit">
+    <i class="fa fa-eye"></i> Launch Jupyter
+  </button>
+</form>
+<form action="/pun/sys/dashboard/batch_connect/sys/multitenant-gradio" method="get" target="_self">
+  <button class="btn btn-primary" type="submit">
+    <i class="fa fa-comments"></i> Launch Gradio
+  </button>
+</form>
+</div>
+
+<%- elsif mt_appname == "Ollama_Code" -%>
+
+Make sure you have the Cline extension installed within Code Server. Use the following parameters to configure Cline:
+
+<strong>Use your own API key</strong><br>
+<strong>API Provider:</strong> <code>Ollama</code><br>
+<strong>Use custom base URL:</strong> &#10003;<br>
+<strong>Base URL:</strong> <code><%= ollama_url.to_s.gsub(":",'&#x3A;') %></code><br>
+<strong>Model:</strong> <code><%= ollama_model %></code><br>
+
+<form action="/pun/sys/dashboard/batch_connect/sys/code-server" method="get" target="_self">
+  <button class="btn btn-primary" type="submit">
+    <i class="fa fa-cogs"></i> Launch Code Server
+  </button>
+</form>
+
+<%- elsif mt_appname == "RShiny_App" -%>
+
+<form action="/rnode/<%= host %>/<%= port %>/" method="get" target="_blank">
+  <button class="btn btn-primary" type="submit">
+    <i class="fa fa-eye"></i> Connect to R Shiny App
+  </button>
+</form>
+
+<%- end -%>

@@ -1,0 +1,21 @@
+<%-
+  nodes = bc_num_slots.to_i
+  mem = memory.to_i
+  ppn = num_cores.to_i
+  gpus = num_gpus.to_i
+
+  case node_type
+  when "any"
+    slurm_args = [ "--nodes", "#{nodes}", "--ntasks-per-node", "#{ppn}", "--mem", "#{mem}G" ]
+  end
+%>
+---
+batch_connect:
+  template: basic
+script:
+  accounting_id: "<%= auto_accounts %>"
+  queue_name: "<%= auto_queues %>"
+  native:
+  <%- slurm_args.each do |arg| %>
+    - "<%= arg %>"
+  <%- end %>

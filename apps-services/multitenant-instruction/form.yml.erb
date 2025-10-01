@@ -1,0 +1,44 @@
+---
+cluster:
+  - "deac"
+form:
+  - bc_num_hours
+  - num_cores
+  - memory
+  - bc_num_slots
+  - node_type
+  - num_gpus
+  - bc_email_on_started
+  - auto_accounts
+  - auto_queues
+  - mt_instructional
+  - auto_groups
+  - mt_method
+  - mt_delivery
+  - mt_appname
+attributes:
+  bc_num_hours: 1
+  num_cores: 1
+  memory: 1
+  bc_num_slots: 1
+  node_type: "any"
+  num_gpus: 0
+  bc_email_on_started: 0
+################################################################################
+################################################################################
+  auto_groups:
+    label: "Tenant Group"
+    help: |
+      Select the group of users that should connect to your app.
+  mt_method: "card"
+  mt_delivery: "sys/multitenant-delivery_readfile"
+  mt_instructional:
+    widget: "path_selector"
+    label: "Learning Content"
+    data-target-file-type: file  # Valid values are: files, dirs, or both
+    readonly: true
+    help: |
+      Select a markdown file with the content you want to display on the
+      instructional card. **NOTE**: the targeted users must have permission to
+      access and read the file.
+  mt_appname: "Class"

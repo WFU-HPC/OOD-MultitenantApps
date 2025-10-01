@@ -1,0 +1,104 @@
+---
+cluster:
+  - "deac"
+form:
+  - bc_num_hours
+  - num_cores
+  - memory
+  - bc_num_slots
+  - node_type
+  - num_gpus
+  - bc_email_on_started
+  - auto_accounts
+  - auto_queues
+  - version
+  - enable_multitenant
+  - auto_groups
+  - mt_method
+  - mt_delivery_select
+  - mt_delivery
+  - mt_appname
+attributes:
+  bc_num_hours: 1
+  num_cores: 1
+  memory: 1
+  bc_num_slots: 1
+  node_type: "any"
+  num_gpus: 0
+  bc_email_on_started: 0
+################################################################################
+################################################################################
+  version: "apps/r/4.3.3"
+################################################################################
+################################################################################
+  enable_multitenant:
+    label: "Multitenant App Options"
+    widget: 'select'
+    options:
+      - [
+          'No Multitenancy', 'none',
+          data-set-mt-method: 'form',
+          data-set-mt-delivery-select: 0,
+          data-set-auto-groups: <%= CurrentUser.group_names[0].to_s %>,
+          data-hide-mt-method: true,
+          data-hide-mt-delivery-select: true,
+          data-hide-auto-groups: true,
+        ]
+      - [
+          'My User Only', 'user',
+          data-set-mt-method: 'form',
+          data-set-mt-delivery-select: 0,
+          data-set-auto-groups: <%= CurrentUser.group_names[0].to_s %>,
+          data-hide-mt-method: true,
+          data-hide-mt-delivery-select: true,
+          data-hide-auto-groups: true,
+        ]
+      - [
+          'Other Users', 'mt',
+          data-set-mt-delivery-select: 0,
+          data-hide-mt-method: false,
+          data-hide-mt-delivery-select: true,
+          data-hide-auto-groups: false,
+        ]
+    help: |
+      Do you want your job to be shared with select users?
+  auto_groups:
+    label: "Tenant Group"
+    help: |
+      Select the group of users that should connect to your app.
+  mt_method:
+    label: "Delivery Method"
+    help: |
+      What type of view do you want your users to see?
+    widget: select
+    options:
+      - [
+          "Form View Only", "form",
+          data-hide-mt-delivery-select: true,
+          data-set-mt-delivery-select: 0,
+        ]
+      - [
+          "Card + Form View", "card",
+          data-hide-mt-delivery-select: false,
+          data-set-mt-delivery-select: 0,
+        ]
+  mt_delivery_select:
+    widget: "select"
+    label: "Card Preset"
+    options:
+      - [
+          "Default R Shiny App", 0,
+          data-set-mt-delivery: "sys/multitenant-delivery_default",
+          data-set-mt-appname: "RShiny_App"
+        ]
+      - [
+          "Debug", 2,
+          data-set-mt-delivery: "sys/multitenant-delivery_debug",
+          data-set-mt-appname: "debug"
+        ]
+    help: |
+      The style of card you want delivered to tenants.
+  mt_delivery:
+    widget: "hidden_field"
+  mt_appname:
+    widget: "hidden_field"

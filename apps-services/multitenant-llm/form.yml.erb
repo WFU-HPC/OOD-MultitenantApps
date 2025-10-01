@@ -1,0 +1,148 @@
+---
+cluster:
+  - "deac"
+form:
+  - bc_num_hours
+  - num_cores
+  - memory
+  - bc_num_slots
+  - node_type
+  - num_gpus
+  - bc_email_on_started
+  - auto_accounts
+  - auto_queues
+  - version
+  - ollama_models
+  - ollama_model
+  - ollama_custom
+  - enable_multitenant
+  - auto_groups
+  - mt_method
+  - mt_delivery_select
+  - mt_delivery
+  - mt_appname
+attributes:
+  bc_num_hours: 1
+  num_cores: 64
+  memory: 750
+  bc_num_slots: 1
+  node_type: "any"
+  num_gpus: 4
+  bc_email_on_started: 0
+################################################################################
+################################################################################
+  version:
+    widget: select
+    label: "Ollama Version"
+    help: |
+      Select your database type and version.
+    options:
+      - [ "Ollama 0.11.10", "apps/ollama/0.11.10" ]
+  ollama_models:
+    widget: select
+    label: "Ollama Models Directory"
+    help: |
+      Choose the location from where Ollama should load (or download) models.
+    options:
+      - [ "System Models", "system", data-hide-ollama-custom: true, data-set-ollama-custom: "", data-hide-ollama-model: false ]
+      - [ "Temporary Scratch Directory", "scratch", data-hide-ollama-custom: true, data-set-ollama-custom: "", data-hide-ollama-model: true, data-set-ollama-model: none ]
+      - [ "Custom Location", "custom", data-hide-ollama-custom: false, data-hide-ollama-model: true, data-set-ollama-model: none ]
+  ollama_model:
+    widget: select
+    label: "Ollama Model"
+    help: |
+      The specific model you want to serve out with Ollama.
+    options:
+      - ["llama3.1:8b", "llama3.1:8b"]
+      - ["deepseek-r1:14b", "deepseek-r1:14b"]
+      - ["deepseek-r1:32b", "deepseek-r1:32b"]
+      - ["gemma3:27b", "gemma3:27b"]
+      - ["gpt-oss:20b", "gpt-oss:20b"]
+      - ["gpt-oss:120b", "gpt-oss:120b"]
+      - ["codellama:70b", "codellama:70b"]
+  ollama_custom:
+    widget: path_selector
+    label: "Custom Ollama Models Directory"
+    data-target-file-type: dirs  # Valid values are: files, dirs, or both
+    readonly: false
+    help: |
+      Select the directory for your Ollama Models.
+################################################################################
+################################################################################
+  enable_multitenant:
+    label: "Multitenant App Options"
+    widget: 'select'
+    options:
+      - [
+          'No Multitenancy', 'none',
+          data-set-mt-method: 'form',
+          data-set-mt-delivery-select: 0,
+          data-set-auto-groups: <%= CurrentUser.group_names[0].to_s %>,
+          data-hide-mt-method: true,
+          data-hide-mt-delivery-select: true,
+          data-hide-auto-groups: true,
+        ]
+      - [
+          'My User Only', 'user',
+          data-set-mt-method: 'form',
+          data-set-mt-delivery-select: 0,
+          data-set-auto-groups: <%= CurrentUser.group_names[0].to_s %>,
+          data-hide-mt-method: true,
+          data-hide-mt-delivery-select: true,
+          data-hide-auto-groups: true,
+        ]
+      - [
+          'Other Users', 'mt',
+          data-set-mt-delivery-select: 0,
+          data-hide-mt-method: false,
+          data-hide-mt-delivery-select: true,
+          data-hide-auto-groups: false,
+        ]
+    help: |
+      Do you want your job to be shared with select users?
+  auto_groups:
+    value: "hpcGrp"
+    label: "Tenant Group"
+    help: |
+      Select the group of users that should connect to your app.
+  mt_method:
+    label: "Delivery Method"
+    help: |
+      What type of view do you want your users to see?
+    widget: select
+    options:
+      - [
+          "Form View Only", "form",
+          data-hide-mt-delivery-select: true,
+          data-set-mt-delivery-select: 0,
+        ]
+      - [
+          "Card + Form View", "card",
+          data-hide-mt-delivery-select: false,
+          data-set-mt-delivery-select: 0,
+        ]
+  mt_delivery_select:
+    widget: "select"
+    label: "Card Preset"
+    options:
+      - [
+          "Default Ollama API (Jupyter/Python)", 0,
+          data-set-mt-delivery: "sys/multitenant-delivery_default",
+          data-set-mt-appname: "Ollama_API"
+        ]
+      - [
+          "Code Generation (Code Server + Cline)", 1,
+          data-set-mt-delivery: "sys/multitenant-delivery_default",
+          data-set-mt-appname: "Ollama_Code"
+        ]
+      - [
+          "Debug", 2,
+          data-set-mt-delivery: "sys/multitenant-delivery_debug",
+          data-set-mt-appname: "debug"
+        ]
+    help: |
+      The style of card you want delivered to tenants.
+  mt_delivery:
+    widget: "hidden_field"
+  mt_appname:
+    widget: "hidden_field"

@@ -1,0 +1,9 @@
+---
+name: Multitenant Database
+category: Interactive Apps
+subcategory: "Multitenant"
+role: batch_connect
+description: |
+  This app will launch the Multitenant Database Server.
+tile:
+  border_color: "teal"

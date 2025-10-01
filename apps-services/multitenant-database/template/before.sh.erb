@@ -1,0 +1,45 @@
+# Export the module function if it exists
+[[ $(type -t module) == "function" ]] && export -f module
+
+# Find available port to run server on
+export port=$(find_port ${host} 32768 65535)
+
+# # Generate password
+# export password="$(create_passwd 16)"
+
+# Get the session id into a variable
+export sessionid=<%= session.id %>
+
+################################################################################
+################################################################################
+
+export user="<%= context.db_user %>"
+export password="<%= context.db_pass %>"
+export database="<%= context.db_name %>"
+export datadir="<%= context.db_data %>"
+export mt_appname="<%= context.mt_appname %>"
+
+<%- if context.version.include?("mysql") -%>
+# MySQL environment
+export MYSQL_DATA="$datadir"
+export MYSQL_HOST=0.0.0.0
+export MYSQL_TCP_PORT="$port"
+export MYSQL_DATABASE="$database"
+export MYSQL_USER="$user"
+export MYSQL_PASS="$password"
+export jdbc_url=""
+<%- elsif context.version.include?("mariadb") -%>
+# MySQL environment
+export MYSQL_DATA="$datadir"
+export MYSQL_HOST=0.0.0.0
+export MYSQL_TCP_PORT="$port"
+export jdbc_url="jdbc:mariadb://${host}:${port}/${database}"
+<%- elsif context.version.include?("postgres") -%>
+# Postgres environment
+export PGDATA="$datadir"
+export PGPORT="$port"
+export PGDATABASE="$database"
+export PGUSER="$user"
+export PGPASS="$password"
+export jdbc_url="jdbc:postgresql://${host}:${port}/${database}"
+<%- end -%>

@@ -1,0 +1,7 @@
+---
+name: Gradio (MT)
+category: Interactive Apps
+subcategory: "Multitenant"
+role: batch_connect
+description: |
+  This app will launch a Gradio server on one or more nodes.

@@ -1,0 +1,39 @@
+---
+cluster:
+  - "deac"
+form:
+  - bc_num_hours
+  - num_cores
+  - memory
+  - bc_num_slots
+  - node_type
+  - num_gpus
+  - bc_email_on_started
+  - auto_accounts
+  - auto_queues
+  - version
+  - working_dir
+  <%- unless MultiTenant.specs.nil? || MultiTenant.specs.empty? -%>
+  - ollama_interface
+  <%- end -%>
+attributes:
+  bc_num_hours: 1
+  num_cores: 4
+  memory: 8
+  bc_num_slots: 1
+  node_type: "any"
+  num_gpus: 0
+  bc_email_on_started: 0
+  working_dir: ""
+  version: "apps/python/3.11.8"
+  <%- unless MultiTenant.specs.nil? || MultiTenant.specs.empty? -%>
+  ollama_interface:
+    label: "Ollama API Connection"
+    required: false
+    widget: select
+    options:
+      <%- MultiTenant.specs.each do |key, value| %>
+      - [ '<%= "#{value["accounting"]["mta"]} (Job ID: #{key})" %>', '<%= value["connection"]['ollama_url'] %>' ]
+      <%- end -%>
+    cacheable: false
+  <%- end -%>

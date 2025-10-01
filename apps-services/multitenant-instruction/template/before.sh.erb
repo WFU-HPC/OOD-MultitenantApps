@@ -1,0 +1,16 @@
+# Export the module function if it exists
+[[ $(type -t module) == "function" ]] && export -f module
+
+# Find available port to run server on
+export port=$(find_port ${host} 32768 65535)
+
+# # Generate password
+# export password="$(create_passwd 16)"
+
+# Get the session id into a variable
+export sessionid=<%= session.id %>
+
+################################################################################
+################################################################################
+
+export content_path="<%= context.mt_instructional %>"

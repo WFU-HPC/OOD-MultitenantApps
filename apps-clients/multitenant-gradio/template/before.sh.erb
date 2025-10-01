@@ -1,0 +1,90 @@
+#!/bin/bash
+# Export the module function if it exists
+[[ $(type -t module) == "function" ]] && export -f module
+
+# Find available port to run server on
+port=$(find_port ${host} 32768 65535)
+
+################################################################################
+################################################################################
+
+# gradio config
+export GRADIO_SERVER_PORT=${port}
+export GRADIO_SERVER_NAME="0.0.0.0"
+export GRADIO_DEBUG=1
+export GRADIO_ROOT_PATH="/node/${host}/${port}"
+export FORWARDED_ALLOW_IPS="127.0.0.1"
+<%- unless MultiTenant.specs.nil? || MultiTenant.specs.empty? -%>
+export OLLAMA_HOST=<%= context.ollama_interface %>
+<%- end -%>
+
+# generate chatbot script
+(
+umask 077
+cat << EOL > gradio_chatbot.py
+#!/usr/bin/env python3
+
+# Gradio chatbot by Mervin Praison
+# https://mer.vin/2025/01/ollama-reasoning-chatbot-with-gradio-ui/
+
+import ollama
+import gradio as gr
+
+def chat_with_ollama(message, history):
+    # Initialize empty string for streaming response
+    response = ""
+    
+    # Convert history to messages format
+    messages = [
+        {"role": "system", "content": "You are a helpful assistant."}
+    ]
+    
+    # Add history messages
+    for h in history:
+        messages.append({"role": "user", "content": h[0]})
+        if h[1]:  # Only add assistant message if it exists
+            messages.append({"role": "assistant", "content": h[1]})
+    
+    # Add current message
+    messages.append({"role": "user", "content": message})
+    
+    completion = ollama.chat(
+        model="gpt-oss:120b",
+        messages=messages,
+        stream=True  # Enable streaming
+    )
+    
+    # Stream the response
+    for chunk in completion:
+        if 'message' in chunk and 'content' in chunk['message']:
+            content = chunk['message']['content']
+            # Handle <think> and </think> tags
+            content = content.replace("<think>", "Thinking...").replace("</think>", "\n\n Answer:")
+            response += content
+            yield response
+
+# Create Gradio interface with Chatbot
+with gr.Blocks() as demo:
+    chatbot = gr.Chatbot()
+    msg = gr.Textbox(placeholder="Enter your message here...")
+    clear = gr.Button("Clear")
+
+    def user(user_message, history):
+        return "", history + [[user_message, None]]
+
+    def bot(history):
+        history[-1][1] = ""
+        for chunk in chat_with_ollama(history[-1][0], history[:-1]):
+            history[-1][1] = chunk
+            yield history
+
+    msg.submit(user, [msg, chatbot], [msg, chatbot], queue=False).then(
+        bot, chatbot, chatbot
+    )
+    clear.click(lambda: None, None, chatbot, queue=False)
+
+if __name__ == "__main__":
+    demo.launch()
+
+EOL
+)

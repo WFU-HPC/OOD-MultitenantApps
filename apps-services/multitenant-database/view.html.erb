@@ -1,0 +1,42 @@
+<%- if mt_appname == "DB_Conn" -%>
+
+<h5>Database Connection Details</h5>
+<strong>Host:</strong>     <code><%= host %></code><br>
+<strong>Port:</strong>     <code><%= port %></code><br>
+<strong>Database:</strong> <code><%= database %></code><br>
+<strong>Username:</strong> <code><%= user %></code><br>
+<strong>Password:</strong> <code><%= password %></code><br>
+
+<div style="display: flex; gap: 20px;" class="d-flex">
+<form action="/pun/sys/dashboard/batch_connect/sys/cloudbeaver" method="get" target="_blank">
+  <button class="btn btn-primary" type="submit" style="width:200px">
+    <i class="fa fa-database"></i> Launch CloudBeaver
+  </button>
+</form>
+<form action="/pun/sys/dashboard/batch_connect/sys/dbeaver" method="get" target="_blank">
+  <button class="btn btn-primary" type="submit" style="width:200px">
+    <i class="fa fa-database"></i> Launch DBeaver
+  </button>
+</form>
+</div>
+
+<%- elsif mt_appname == "DB_JDBC" -%>
+
+<strong>JDBC URL:</strong> <pre><code><%= jdbc_url %></code></pre>
+<strong>Username:</strong> <code><%= user %></code><br>
+<strong>Password:</strong> <code><%= password %></code><br>
+
+<div style="display: flex; gap: 20px;" class="d-flex">
+<form action="/pun/sys/dashboard/batch_connect/sys/cloudbeaver" method="get" target="_blank">
+  <button class="btn btn-primary" type="submit" style="width:200px">
+    <i class="fa fa-database"></i> Launch CloudBeaver
+  </button>
+</form>
+<form action="/pun/sys/dashboard/batch_connect/sys/dbeaver" method="get" target="_blank">
+  <button class="btn btn-primary" type="submit" style="width:200px">
+    <i class="fa fa-database"></i> Launch DBeaver
+  </button>
+</form>
+</div>
+
+<%- end -%>

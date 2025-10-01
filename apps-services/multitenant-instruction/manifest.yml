@@ -1,0 +1,9 @@
+---
+name: Multitenant Instruction
+category: Interactive Apps
+subcategory: "Multitenant"
+role: batch_connect
+description: |
+  This app will deliver instructional content directly to a group of users.
+tile:
+  border_color: "teal"
