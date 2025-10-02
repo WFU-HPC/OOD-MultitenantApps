@@ -142,7 +142,7 @@ sacctmgr mod user <newuser> set defaultwckey=""
 
 You can add these commands to your onboarding process.
 
-## Enabling the Multitenant behavior
+## Enabling the Multitenant Framework
 
 Once you have everything in place and are satisfied with your Slurm configuration, you will need to enable the Multitenant framework by chaning the environment variable in the `/etc/ood/config/apps/dashboard/env` file:
 
@@ -151,3 +151,8 @@ MULTITENANT_ENABLE=true
 ```
 
 You will need to restart your PUN in order for this change to take effect.
+
+
+## Using the Multitenant Framework
+
+You really need at least two user accounts to properly test everything out, so grab a buddy or get a new test account! Remember, nothing will happen on the receiving user's side until they restart their PUN, so you will be well served to make a new button or link just for that.
