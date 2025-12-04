@@ -5,6 +5,7 @@
 **Principal contact: Sean Anderson** (anderss@wfu.edu)
 
 [Tips and Tricks Presentation from Oct. 2, 2025](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/presentation.pdf)
+[Video Recording of the Presentation with Demos](https://drive.google.com/file/d/1aHcIRVxz4xpamuEcX_12sOG7OCYVNlBe/view?usp=sharing)
 
 The Multitenant Apps framework was developed for supporting LLMs, databases, and other services on traditional, job-based HPC infrastructure through Open OnDemand (OOD). It allows for controlled and secure sharing of these services between select users, and can greatly reduce hardware overhead since users share the same resources. It is also an effective method for delivering content to users within the OOD interface, which is especially useful within classrooms, research groups, and even departments.
 
