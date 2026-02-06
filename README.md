@@ -1,6 +1,5 @@
-[![DOI](https://zenodo.org/badge/1066655982.svg)](https://doi.org/10.5281/zenodo.18500730)
-
 # Multitenant Apps: LLMs, Databases, Dashboards, and other shared services within Open OnDemand
+[![DOI](https://zenodo.org/badge/1066655982.svg)](https://doi.org/10.5281/zenodo.18500730)
 
 **Wake Forest University**<br>
 **The HPC Team** (https://hpc.wfu.edu)<br>
