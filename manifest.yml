@@ -1,0 +1,16 @@
+---
+name: Multitenant Apps
+category: Interactive Apps
+subcategory: "Multitenant"
+role: batch_connect
+description: |
+  Multitenant Apps: LLMs, Databases, Dashboards, and other shared services
+    within Open OnDemand
+
+  The Multitenant Apps framework was developed for supporting LLMs, databases,
+  and other services on traditional, job-based HPC infrastructure through Open
+  OnDemand (OOD). It allows for controlled and secure sharing of these services
+  between select users, and can greatly reduce hardware overhead since users
+  share the same resources. It is also an effective method for delivering
+  content to users within the OOD interface, which is especially useful within
+  classrooms, research groups, and even departments.
