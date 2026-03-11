@@ -5,9 +5,7 @@
 **The HPC Team** (https://hpc.wfu.edu)<br>
 **Principal contact: Sean Anderson** (anderss@wfu.edu)
 
-<iframe src="https://drive.google.com/file/d/1z63SPEUuRCqTlWXl3GEzZwWIYQDBIH0e/preview" width="640" height="480"></iframe>
-
-[GOOD26 Presentation from Mar. 11, 2026](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/pres-good26.pdf)<br><br>
+[GOOD26 Presentation from Mar. 11, 2026](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/pres-good26.pdf)<br>
 
 [Tips and Tricks Presentation from Oct. 2, 2025](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/pres-tipsandtricks.pdf)<br>
 [Video Recording of the Presentation with Demos](https://drive.google.com/file/d/1aHcIRVxz4xpamuEcX_12sOG7OCYVNlBe/view?usp=sharing)
