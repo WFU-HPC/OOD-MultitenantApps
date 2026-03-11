@@ -12,10 +12,17 @@
 
 The Multitenant Apps framework was developed for supporting LLMs, databases, and other services on traditional, job-based HPC infrastructure through Open OnDemand (OOD). It allows for controlled and secure sharing of these services between select users, and can greatly reduce hardware overhead since users share the same resources. It is also an effective method for delivering content to users within the OOD interface, which is especially useful within classrooms, research groups, and even departments.
 
+**The Multitenant Apps framework is proud to be a part of the [Open OnDemand Appverse](ondemand.connectci.org/appverse)!**
+
 
 ## Disclaimer
 
 This software comes with no warranty. Make sure to use your "development" OOD server for testing, and make backups of any config or installation files as needed. For the Slurm WCKeys, you should test first without making any changes to your Slurm config files.
+
+
+## Contributing & Support
+
+We would love to hear your feedback and welcome contributions to the Multitenant Apps framework. Please use GitHub issues or email to start a conversation! Remember, this is a **community** created effort.
 
 
 ## Installation on OOD Server
