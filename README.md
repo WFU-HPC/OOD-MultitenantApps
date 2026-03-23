@@ -6,7 +6,7 @@
 **Principal contact: Sean Anderson** (anderss@wfu.edu)
 
 [GOOD26 Presentation from Mar. 11, 2026](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/pres-good26.pdf)<br>
-[Video Recording of the main presentation with demos](https://vimeo.com/showcase/12164326?video=1174785059)
+[Video Recording of the main presentation with demos](https://vimeo.com/showcase/12164326?video=1174785059)<br>
 [Video Recording of the classroom presentation with demo](https://vimeo.com/showcase/12164326?video=1174777047#t=40m50s)
 
 [Tips and Tricks Presentation from Oct. 2, 2025](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/pres-tipsandtricks.pdf)<br>
