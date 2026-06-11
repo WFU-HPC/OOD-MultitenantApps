@@ -1,0 +1,171 @@
+title: "Multitenant Apps"
+description: |
+  The Multitenant Apps framework was developed for supporting LLMs, databases,
+  and other services on traditional, job-based HPC infrastructure through Open
+  OnDemand (OOD). It allows for controlled and secure sharing of these services
+  between select users, and can greatly reduce hardware overhead since users share
+  the same resources. It is also an effective method for delivering content to
+  users within the OOD interface, which is especially useful within classrooms,
+  research groups, and even departments.
+website: "https://github.com/WFU-HPC/OOD-MultitenantApps"
+docs: "https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/README.md"
+tags:
+  - "multitenant"
+  - "services"
+  - "ai"
+  - "llm"
+  - "database"
+  - "data-sharing"
+  - "webserver"
+  - "api"
+  - "shared"
+  - "instruction"
+  - "classroom"
+  - "client"
+  - "chatbot"
+  - "python"
+maintainer:
+  name: "Sean Anderson"
+  support_url: "https://github.com/WFU-HPC/OOD-MultitenantApps/issues"
+apps:
+################################################################################
+## services ####################################################################
+################################################################################
+  - path: "apps-services/multitenant-dashboard"
+    name: "Multitenant Dashboard"
+    description: |
+      An app for sharing a web server (or dashboard), within a Slurm job, with
+      other users.
+    software: "Multitenant Apps"
+    app_type: "batch-connect-basic"
+    tags:
+      - "multitenant"
+      - "shared"
+      - "webserver"
+      - "data-sharing"
+    maintainer:
+      name: "Sean Anderson"
+      support_url: "https://github.com/WFU-HPC/OOD-MultitenantApps/issues"
+  - path: "apps-services/multitenant-database"
+    name: "Multitenant Database"
+    description: |
+      An app for sharing MySQL, MariaDB, or Postgres database server, within a
+      Slurm job, with other users.
+    software: "Multitenant Apps"
+    app_type: "batch-connect-basic"
+    tags:
+      - "multitenant"
+      - "shared"
+      - "database"
+    maintainer:
+      name: "Sean Anderson"
+      support_url: "https://github.com/WFU-HPC/OOD-MultitenantApps/issues"
+  - path: "apps-services/multitenant-instruction"
+    name: "Multitenant Instruction"
+    description: |
+      An app for displaying a Markdown or HTML file in other users' dashboards.
+    software: "Multitenant Apps"
+    app_type: "batch-connect-basic"
+    tags:
+      - "multitenant"
+      - "shared"
+      - "instruction"
+      - "data-sharing"
+    maintainer:
+      name: "Sean Anderson"
+      support_url: "https://github.com/WFU-HPC/OOD-MultitenantApps/issues"
+  - path: "apps-services/multitenant-llm"
+    name: "Multitenant LLM"
+    description: |
+      An app for sharing an Ollama server, within a Slurm job, with other users.
+    software: "Multitenant Apps"
+    app_type: "batch-connect-basic"
+    tags:
+      - "multitenant"
+      - "shared"
+      - "llm"
+      - "ai"
+      - "api"
+    maintainer:
+      name: "Sean Anderson"
+      support_url: "https://github.com/WFU-HPC/OOD-MultitenantApps/issues"
+################################################################################
+## clients #####################################################################
+################################################################################
+  - path: "apps-clients/multitenant-gradio"
+    name: "Multitenant Gradio"
+    description: |
+      A simple Gradio chatbot app that will retrieve and use info from the
+      Multitenant LLM app, and populate the "$OLLAMA_HOST" environment
+      variable.
+    software: "Multitenant Apps"
+    app_type: "batch-connect-basic"
+    tags:
+      - "multitenant"
+      - "client"
+      - "ai"
+      - "llm"
+      - "chatbot"
+      - "api"
+    maintainer:
+      name: "Sean Anderson"
+      support_url: "https://github.com/WFU-HPC/OOD-MultitenantApps/issues"
+  - path: "apps-clients/multitenant-jupyter"
+    name: "Multitenant Jupyter"
+    description: |
+      A Jupyter app that will retrieve and use info from the Multitenant LLM
+      app, and populate the "$OLLAMA_HOST" environment variable.
+    software: "Multitenant Apps"
+    app_type: "batch-connect-basic"
+    tags:
+      - "multitenant"
+      - "client"
+      - "ai"
+      - "llm"
+      - "chatbot"
+      - "api"
+      - "python"
+    maintainer:
+      name: "Sean Anderson"
+      support_url: "https://github.com/WFU-HPC/OOD-MultitenantApps/issues"
+################################################################################
+## delivery#####################################################################
+################################################################################
+  - path: "apps-delivery/multitenant-debug"
+    name: "Multitenant Delivery Debug"
+    description: |
+      Delivery (fake) app that allows for displaying the raw contents of the
+      information transmitted via the Multitenant apps for debugging.
+    software: "Multitenant Apps"
+    app_type: "batch-connect-basic"
+    tags:
+      - "multitenant"
+      - "delivery"
+    maintainer:
+      name: "Sean Anderson"
+      support_url: "https://github.com/WFU-HPC/OOD-MultitenantApps/issues"
+  - path: "apps-delivery/multitenant-default"
+    name: "Multitenant Delivery Default"
+    description: |
+      Delivery (fake) app that you tailor for displaying content from the
+      Multitenant apps.
+    software: "Multitenant Apps"
+    app_type: "batch-connect-basic"
+    tags:
+      - "multitenant"
+      - "delivery"
+    maintainer:
+      name: "Sean Anderson"
+      support_url: "https://github.com/WFU-HPC/OOD-MultitenantApps/issues"
+  - path: "apps-delivery/multitenant-readfile"
+    name: "Multitenant Delivery Readfile"
+    description: |
+      Delivery (fake) app that reads a text file and renders it.
+    software: "Multitenant Apps"
+    app_type: "batch-connect-basic"
+    tags:
+      - "multitenant"
+      - "delivery"
+    maintainer:
+      name: "Sean Anderson"
+      support_url: "https://github.com/WFU-HPC/OOD-MultitenantApps/issues"

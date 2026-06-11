@@ -3,7 +3,7 @@
 
 **Wake Forest University**<br>
 **The HPC Team** (https://hpc.wfu.edu)<br>
-**Principal contact: Sean Anderson** (anderss@wfu.edu)
+**Principal contact: Sean Anderson** (anderss@wfu.edu)<br>
 **The Multitenant Apps framework is proud to be a part of the [Open OnDemand Appverse](https://openondemand.connectci.org/appverse)!**
 
 [GOOD26 Presentation from Mar. 11, 2026](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/pres-good26.pdf)<br>
