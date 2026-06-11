@@ -4,6 +4,7 @@
 **Wake Forest University**<br>
 **The HPC Team** (https://hpc.wfu.edu)<br>
 **Principal contact: Sean Anderson** (anderss@wfu.edu)
+**The Multitenant Apps framework is proud to be a part of the [Open OnDemand Appverse](https://openondemand.connectci.org/appverse)!**
 
 [GOOD26 Presentation from Mar. 11, 2026](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/pres-good26.pdf)<br>
 [Video Recording of the main presentation with demos](https://vimeo.com/showcase/12164326?video=1174785059)<br>
@@ -12,22 +13,60 @@
 [Tips and Tricks Presentation from Oct. 2, 2025](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/pres-tipsandtricks.pdf)<br>
 [Video Recording of the Presentation with Demos](https://drive.google.com/file/d/1aHcIRVxz4xpamuEcX_12sOG7OCYVNlBe/view?usp=sharing)
 
+## Overview
+
 The Multitenant Apps framework was developed for supporting LLMs, databases, and other services on traditional, job-based HPC infrastructure through Open OnDemand (OOD). It allows for controlled and secure sharing of these services between select users, and can greatly reduce hardware overhead since users share the same resources. It is also an effective method for delivering content to users within the OOD interface, which is especially useful within classrooms, research groups, and even departments.
 
-**The Multitenant Apps framework is proud to be a part of the [Open OnDemand Appverse](https://openondemand.connectci.org/appverse)!**
+- **Type:** OOD framework (multiple Batch Connect apps)
+- **Components:** Client apps, Service apps, Delivery apps, Dashboard initializer
+- **Scheduler:** Slurm (with optional WCKey enforcement)
+- **Access control:** POSIX groups and/or Slurm WCKeys
+- **Cluster:** DEAC (designed to be portable)
 
+## Screenshots
+
+<img src="images/apps.png" width="650" alt="Resized image">
+
+<table>
+  <tr>
+    <td><img src="images/form.png" height="300" alt="First screenshot"></td>
+    <td><img src="images/card.png" height="300" alt="Second screenshot"></td>
+  </tr>
+</table>
+
+## Features
+
+- Framework for running shared LLMs, databases, dashboards, and other
+  services on HPC clusters through Open OnDemand
+- Three app types: 
+    - **Services** (launch and manage shared resources)
+    - **Delivery** (push content to users)
+    - **Clients** (connect to running services)
+- Controlled sharing between select users via POSIX groups and Slurm WCKeys
+- Reduced hardware overhead -- multiple users share the same running service
+
+## Requirements
+
+### OOD Server
+
+- Tested with OOD v4.0+ and v3.1.*
+
+### Slurm
+
+- Any recent Slurm version
+- Slurm with accounting enabled
+- Slurm WCKey support (optional, for access control enforcement)
+
+### Access Control
+
+- POSIX group (e.g., `mtUsr`) for restricting access to apps
+  (recommended)
 
 ## Disclaimer
 
 This software comes with no warranty. Make sure to use your "development" OOD server for testing, and make backups of any config or installation files as needed. For the Slurm WCKeys, you should test first without making any changes to your Slurm config files.
 
-
-## Contributing & Support
-
-We would love to hear your feedback and welcome contributions to the Multitenant Apps framework. Please use GitHub issues or email to start a conversation! Remember, this is a **community** created effort.
-
-
-## Installation on OOD Server
+## Installation
 
 I will assume that you have cloned the repo on your OOD dev server, and are working out of the root of this directory. You will need Root privileges for most of these commands, so take appropriate measures beforehand.
 
@@ -165,7 +204,54 @@ MULTITENANT_ENABLE=true
 
 You will need to restart your PUN in order for this change to take effect.
 
+## Testing & Troubleshooting
 
-## Using the Multitenant Framework
+- You need at least two user accounts to properly test everything out, so grab a buddy or get a new test account!
+- Remember, nothing will happen on the receiving user's side until they restart their PUN, so you will be well served to make a new button or link just for that.
+- Always start with small groups with only a few members first. Realistically, you'll want to keep your sharing list under 150 to 200 people.
 
-You really need at least two user accounts to properly test everything out, so grab a buddy or get a new test account! Remember, nothing will happen on the receiving user's side until they restart their PUN, so you will be well served to make a new button or link just for that.
+| Site                      | OOD Version   | Scheduler | Status     |
+|---------------------------|---------------|-----------|------------|
+| Wake Forest University    | 4.2.2         | Slurm     | Production |
+| University of Utah CHPC   | ?             | Slurm     | Testing    |
+
+## Known Limitations
+
+- Not for enterprise applications
+- Not for high security applications
+- Not for sharing Jupyter Notebooks, RStudio or other "log-in" or user-facing applications
+- Not for sharing interactive VNC connections (maybe view-only)
+
+## Contributing & Support
+
+Please [open an issue](https://github.com/WFU-HPC/OOD-MultitenantApps/issues) or send an email to start a conversation. We would love to hear your feedback and welcome contributions! To contribute directly:
+
+1. Fork this repository
+2. Create a feature branch (`git checkout -b feature/my-improvement`)
+3. Submit a pull request with a description of your changes
+
+## References
+
+- [GOOD26 Presentation from Mar. 11, 2026](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/pres-good26.pdf)<br>
+- [Video Recording of the main presentation with demos](https://vimeo.com/showcase/12164326?video=1174785059)<br>
+- [Video Recording of the classroom presentation with demo](https://vimeo.com/showcase/12164326?video=1174777047#t=40m50s)
+- [Tips and Tricks Presentation from Oct. 2, 2025](https://github.com/WFU-HPC/OOD-MultitenantApps/blob/main/pres-tipsandtricks.pdf)<br>
+- [Video Recording of the Presentation with Demos](https://drive.google.com/file/d/1aHcIRVxz4xpamuEcX_12sOG7OCYVNlBe/view?usp=sharing)
+- [Slurm WCKey documentation](https://slurm.schedmd.com/wckey.html)
+- [OOD Batch Connect app development docs](https://osc.github.io/ood-documentation/latest/app-development.html)
+- [OSC Jupyter App](https://github.com/OSC/bc_osc_jupyter)
+- [OSC Jupyter+Ollama App](https://github.com/OSC/bc_osc_jupyter_ollama)
+- [Pace Jupyter+Ollama App](https://github.com/pace-gt/bc_ollama_jupyter)
+- [Tips and Tricks talk by Ron Rahaman from Georgia Tech's PACE](https://drive.google.com/drive/folders/16vBO3HTWiLxB2vPrVzafXDSmcxT3QBIM)
+- [PEARC24 paper on Stable Diffusion in the Classroom](https://dl.acm.org/doi/10.1145/3626203.3670526)
+
+## License
+
+[MIT License](LICENSE)
+
+## Acknowledgments
+
+- Adam Carlson and Cody Stevens (WFU HPC Team)
+- Travis Ravert (OSC)
+- Ying Zhang & CSC331 class (WFU)
+- Jerid Francom (WFU)
